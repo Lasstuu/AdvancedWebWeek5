@@ -1,5 +1,4 @@
 import {Request, Response, Router } from "express";
-import fs from "fs";
 import { ITodo, IUser, User } from "./models/User";
 
 
@@ -65,13 +64,13 @@ router.delete("/delete", (req: Request, res: Response) => {
 
 router.put("/update", async (req: Request, res: Response) => {
     const name: string = req.body.name;
-    const todo: ITodo = {todo: req.body.todos};
+    const todo: ITodo = {todo: req.body.todo};
     console.log(name, todo)
     try{
         const existingUser: IUser | null = await User.findOne({name: name});
         if(existingUser){
-            console.log("todo number " + existingUser.todos.indexOf(todo))
-            existingUser.todos.splice(existingUser.todos.indexOf(todo))
+            console.log("todo number " + existingUser.todos.findIndex(t => t.todo === todo.todo))
+            existingUser.todos.splice(existingUser.todos.findIndex(t => t.todo === todo.todo), 1)
             res.send("Todo deleted successfully")
             await existingUser.save();
         }else{
