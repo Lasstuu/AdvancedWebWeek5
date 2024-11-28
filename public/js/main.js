@@ -41,6 +41,7 @@ searchForm.addEventListener("submit", async function() {
             todoElement.className = "delete-task"
             todoElement.textContent = searchDataJson[i].todo
             todoElement.href = "#"
+            console.log("Todo" + searchDataJson[i].todo)
             todoLiElement.appendChild(todoElement)
             document.getElementById("todoList").appendChild(todoLiElement)
             todoElement.addEventListener("click", async function() {
