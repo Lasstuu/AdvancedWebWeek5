@@ -1,6 +1,6 @@
 import {Request, Response, Router } from "express";
 import fs from "fs";
-
+import { ITodo, IUser, User } from "./models/User";
 
 
 const router: Router = Router();
@@ -10,7 +10,7 @@ type TUser = {
     todos: string[]
 }
 
-let users: TUser[] = []
+let users: IUser[] = []
 
 // fs.readFile("data.json", "utf-8", (err:NodeJS.ErrnoException | null, data: string) => {
 //     if(err){
@@ -23,18 +23,37 @@ let users: TUser[] = []
 //     }
 // })
 
-router.post("/add", (req: Request, res: Response) => {
-    const {name, todos} = req.body;
-    console.log(name, todos)
-    let user = users.find(u => u.name === name);
-    if(user) {
-        console.log("User already exists");
-        user.todos.push(todos);
-        console.log(user.todos)
-    }else{
-        const newUser : TUser= {name, todos: [todos]};
-        users.push(newUser)
+router.post("/add", async (req: Request, res: Response) => {
+    const name: string = req.body.name;
+    const todo: ITodo = {todo: req.body.todos};
+    console.log(name, todo)
+    try{
+        const existingUser: IUser | null = await User.findOne({name: name})
+        console.log(existingUser);
+        if(existingUser){
+            res.status(403).json({message: "User already exists"})
+        }else{
+            const user: IUser = new User({
+                name: name,
+                todos: todo
+            })
+            console.log(user)
+        }
+    }catch(error: any){
+
     }
+
+
+   
+    //let user = users.find(u => u.name === name);
+    // if(user) {
+    //     console.log("User already exists");
+    //     user.todos.push(todos);
+    //     console.log(user.todos)
+    // }else{
+    //     const newUser : TUser= {name, todos: [todos]};
+    //     users.push(newUser)
+    // }
     
     // fs.writeFile("data.json", JSON.stringify(users), (err: NodeJS.ErrnoException | null) => {
     //     if(err){
