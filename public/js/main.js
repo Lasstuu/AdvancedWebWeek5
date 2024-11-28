@@ -18,8 +18,8 @@ form.addEventListener("submit", async function() {
             todos: formTodo
         })
     })
-    const messageText = await data.text()
-    messageElement.textContent = messageText
+    const messageText = await data.json()
+    messageElement.textContent = messageText.message
 })
 const searchForm = document.getElementById("searchForm")
 searchForm.addEventListener("submit", async function() {
