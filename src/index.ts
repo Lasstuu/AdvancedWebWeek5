@@ -63,15 +63,21 @@ router.delete("/delete", (req: Request, res: Response) => {
     }
 })
 
-router.put("/update", (req: Request, res: Response) => {
-    const {name, todo} = req.body;
+router.put("/update", async (req: Request, res: Response) => {
+    const name: string = req.body.name;
+    const todo: ITodo = {todo: req.body.todos};
     console.log(name, todo)
-    const user = users.find(u => u.name === name);
-    if(user) {
-        user.todos.splice(user.todos.indexOf(todo), 1)
-        
-    }else{
-        res.send("User not found")
+    try{
+        const existingUser: IUser | null = await User.findOne({name: name});
+        if(existingUser){
+            existingUser.todos.splice(existingUser.todos.indexOf(todo))
+            await existingUser.save();
+        }else{
+            res.send("User not found")
+        }
+    }catch(error: any){
+        console.error(`Error saving user: ${error}`)
+        res.status(500).json({message: "Internal server error"})
     }
 })
 export default router;
