@@ -40,9 +40,9 @@ router.post("/add", async (req: Request, res: Response) => {
    
 })
 
-router.get("/todos/:id", (req: Request, res: Response) => {
+router.get("/todos/:id", async (req: Request, res: Response) => {
     const name = req.params.id;
-    const user = users.find(u => u.name === name);
+    const user: IUser | null = await User.findOne({name: name});
     if(user) {
         res.send(user.todos)
     }else{

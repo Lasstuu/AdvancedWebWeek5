@@ -39,7 +39,7 @@ searchForm.addEventListener("submit", async function() {
             const todoLiElement = document.createElement("li")
             const todoElement = document.createElement("a")
             todoElement.className = "delete-task"
-            todoElement.textContent = searchDataJson[i]
+            todoElement.textContent = searchDataJson[i].todo
             todoElement.href = "#"
             todoLiElement.appendChild(todoElement)
             document.getElementById("todoList").appendChild(todoLiElement)
