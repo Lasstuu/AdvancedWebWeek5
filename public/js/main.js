@@ -38,6 +38,11 @@ searchForm.addEventListener("submit", async function() {
         for (let i = 0; i < searchDataJson.length; i++) {
             const todoLiElement = document.createElement("li")
             const todoElement = document.createElement("a")
+            const checkBoxElement = document.createElement("input")
+            checkBoxElement.type = "checkbox"
+            checkBoxElement.id = "checkBox"
+            checkBoxElement.className = "checkBox"
+
             todoElement.className = "delete-task"
             todoElement.textContent = searchDataJson[i].todo
             todoElement.href = "#"

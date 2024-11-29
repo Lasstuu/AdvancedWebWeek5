@@ -69,7 +69,6 @@ router.put("/update", async (req: Request, res: Response) => {
     try{
         const existingUser: IUser | null = await User.findOne({name: name});
         if(existingUser){
-            console.log("todo number " + existingUser.todos.findIndex(t => t.todo === todo.todo))
             existingUser.todos.splice(existingUser.todos.findIndex(t => t.todo === todo.todo), 1)
             res.send("Todo deleted successfully")
             await existingUser.save();
