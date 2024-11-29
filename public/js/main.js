@@ -85,7 +85,7 @@ searchForm.addEventListener("submit", async function() {
                 })
                 const updateMessageTodo = await updateCheckedTodo.text()
                 deleteMessageElement.textContent = updateMessageTodo
-                // todoElement.parentElement.remove()
+                
 
                 
             })

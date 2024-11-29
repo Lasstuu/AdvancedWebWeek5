@@ -5,23 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
 </head>
 <body>
-    <form id="todoForm">
-        <input type="text" id="userInput" placeholder="Enter user">
-        <input type="text" id="todoInput" placeholder="Enter todo">
-        <input type="submit" id="submit-data" value="Submit">
-        
-    </form>
-    <p id="message"></p>
-    <form id="searchForm">
-        <input type="text" id="searchInput">
-        <input type="submit" id="search" value="Search">
-        <p id="userSearchMsg"></p>
-    </form>
-    <button id="deleteUser" hidden>Delete User</button>
-    <p id="deleteMessage"></p>
-    <ul id="todoList"></ul>
-
+    <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo left">Todo list</a>
+        </div>
+      </nav>
+    <div class="container">
+        <div class="col">
+            <form id="todoForm">
+                <input type="text" id="userInput" placeholder="Enter user">
+                <input type="text" id="todoInput" placeholder="Enter todo">
+                <input type="submit" id="submit-data" value="Submit" class="btn">
+                
+            </form>
+            <p id="message"></p>
+        </div>
+        <div class="col">
+            <form id="searchForm">
+                <input type="text" id="searchInput">
+                <input type="submit" id="search" value="Search" class="btn">
+                <p id="userSearchMsg"></p>
+            </form>
+            <button id="deleteUser" class="btn" hidden>Delete User</button>
+            <p id="deleteMessage"></p>
+            <ul id="todoList"></ul>
+    
+        </div>
+    </div>
 </body>
 </html>
