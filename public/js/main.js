@@ -40,6 +40,8 @@ searchForm.addEventListener("submit", async function() {
             const todoLiElement = document.createElement("li")
             const todoElement = document.createElement("a")
             const checkBoxElement = document.createElement("input")
+            const labelElement = document.createElement("label")
+            const spanElement = document.createElement("span")
             checkBoxElement.type = "checkbox"
             checkBoxElement.id = "myCheckbox"
             checkBoxElement.className = "checkBoxes"
@@ -47,8 +49,11 @@ searchForm.addEventListener("submit", async function() {
             todoElement.textContent = searchDataJson[i].todo
             todoElement.href = "#"
             console.log("Todo" + searchDataJson[i].todo)
-            todoLiElement.appendChild(todoElement)
-            todoLiElement.appendChild(checkBoxElement)
+            spanElement.appendChild(todoElement)
+            labelElement.appendChild(checkBoxElement)
+            labelElement.appendChild(spanElement)
+            todoLiElement.appendChild(labelElement)
+            
             document.getElementById("todoList").appendChild(todoLiElement)
             todoElement.addEventListener("click", async function() {
                 event.preventDefault()
