@@ -14,7 +14,7 @@ let users: IUser[] = []
 
 router.post("/add", async (req: Request, res: Response) => {
     const name: string = req.body.name;
-    const todo: ITodo = {todo: req.body.todos};
+    const todo: ITodo = {todo: req.body.todos, checked: req.body.checked};
     console.log(name, todo)
     try{
         const existingUser: IUser | null = await User.findOne({name: name});
@@ -64,7 +64,7 @@ router.delete("/delete", (req: Request, res: Response) => {
 
 router.put("/update", async (req: Request, res: Response) => {
     const name: string = req.body.name;
-    const todo: ITodo = {todo: req.body.todo};
+    const todo: ITodo = {todo: req.body.todo, checked: req.body.checked};
     console.log(name, todo)
     try{
         const existingUser: IUser | null = await User.findOne({name: name});
@@ -80,4 +80,24 @@ router.put("/update", async (req: Request, res: Response) => {
         res.status(500).json({message: "Internal server error"})
     }
 })
+
+router.put("/updateTodo", async (req: Request, res: Response) => {
+    const name: string = req.body.name;
+    const todo: ITodo = {todo: req.body.todo, checked: req.body.checked};
+    console.log(name, todo)
+    try{
+        const existingUser: IUser | null = await User.findOne({name: name});
+        if(existingUser){
+            existingUser.todos[existingUser.todos.findIndex(t => t.todo === todo.todo)].checked = todo.checked
+            res.send("Todo checked updated successfully")
+            await existingUser.save();
+        }else{
+            res.send("User not found")
+        }
+    }catch(error: any){
+        console.error(`Error saving user: ${error}`)
+        res.status(500).json({message: "Internal server error"})
+    }
+})
+
 export default router;

@@ -15,7 +15,8 @@ form.addEventListener("submit", async function() {
         },
         body: JSON.stringify({
             name: formUser,
-            todos: formTodo
+            todos: formTodo,
+            checked: false
         })
     })
     const messageText = await data.json()
@@ -40,14 +41,14 @@ searchForm.addEventListener("submit", async function() {
             const todoElement = document.createElement("a")
             const checkBoxElement = document.createElement("input")
             checkBoxElement.type = "checkbox"
-            checkBoxElement.id = "checkBox"
-            checkBoxElement.className = "checkBox"
-
+            checkBoxElement.id = "myCheckbox"
+            checkBoxElement.className = "checkBoxes"
             todoElement.className = "delete-task"
             todoElement.textContent = searchDataJson[i].todo
             todoElement.href = "#"
             console.log("Todo" + searchDataJson[i].todo)
             todoLiElement.appendChild(todoElement)
+            todoLiElement.appendChild(checkBoxElement)
             document.getElementById("todoList").appendChild(todoLiElement)
             todoElement.addEventListener("click", async function() {
                 event.preventDefault()
@@ -58,12 +59,34 @@ searchForm.addEventListener("submit", async function() {
                     },
                     body: JSON.stringify({
                         "name": searchInput.value,
-                        "todo": todoElement.textContent
+                        "todo": todoElement.textContent,
+                        "checked": checkBoxElement.value
                     })
                 })
                 const deleteMessageTodo = await deleteTodo.text()
                 deleteMessageElement.textContent = deleteMessageTodo
                 todoElement.parentElement.remove()
+                
+            })
+            checkBoxElement.addEventListener("change", async function() {
+                //event.preventDefault()
+                console.log(checkBoxElement.checked);
+                
+                const updateCheckedTodo = await fetch("/updateTodo", {
+                    method: "put",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "name": searchInput.value,
+                        "todo": todoElement.textContent,
+                        "checked": checkBoxElement.checked
+                    })
+                })
+                const updateMessageTodo = await updateCheckedTodo.text()
+                deleteMessageElement.textContent = updateMessageTodo
+                // todoElement.parentElement.remove()
+
                 
             })
         }
